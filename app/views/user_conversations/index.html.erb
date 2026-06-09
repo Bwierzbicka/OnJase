@@ -1,0 +1,13 @@
+<h1>All User Conversations</h1>
+
+<% if @user_conversations.any? %>
+  <% @user_conversations.each do |user_conversation| %>
+    <ul>
+      <li><%= link_to "user_conversation", user_conversation_path(user_conversation) %></li>
+      <li><%= user_conversation.user1.id %></li>
+      <li><%= user_conversation.user2.id %></li>
+    </ul>
+  <% end %>
+<% end %>
+
+<%= link_to "New User Conversation", new_user_conversation_path %>

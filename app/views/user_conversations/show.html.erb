@@ -1,2 +1,7 @@
-<h1>UserConversations#show</h1>
-<p>Find me in app/views/user_conversations/show.html.erb</p>
+<% @user_conversation.user_conversation_messages.each do |message| %>
+<%= message.content %>
+<% end %>
+<%= simple_form_for [@user_conversation, @user_conversation_message] do |f| %>
+    <%= f.input :content, placeholder: "Ask anything", required: true, label: false %>
+    <%= f.button :submit, "Submit", class: "btn btn-primary" %>
+  <% end %>

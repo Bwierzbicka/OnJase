@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   # get "user_conversations/show"
   # get "user_conversations/destroy"
   # get "user_conversation_messages/create"
-  resources :user_conversations, only: [:new, :create, :show, :destroy]
-  resources :user_conversation_messages, only: [:create]
+  resources :user_conversations, only: [:new, :create, :show, :destroy, :index] do
+    resources :user_conversation_messages, only: [:new, :create]
+  end
+  #resources :user_conversation_messages, only: [:create]
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
