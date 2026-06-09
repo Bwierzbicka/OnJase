@@ -1,20 +1,15 @@
 class SaveFileTool < Rubyllm::Tool
-  def initialize(client:, model: "claude")
-    @client = client
-    @model = model
-  end
+  descritpion "save content to file"
 
-  def execute(prompt, system: "You are a helpful assistant.")
-    response = @client.chat(
-      params: {
-        model: @model,
-        messages: [
-          { role: "system", content: system },
-          { role: "user", content: prompt }
-        ]
-      }
+  params :path, desc: "fichier sauvegarder"
+  params :content, desc: "contenu du fichier"
+
+  def execute(path:, content:)
+    phrase = Phrase.create!(
+      path: path,
+      content: content
     )
 
-    response.dig("choices", 0, "message", "content")
+    halt "Pharse enregistrer avec succes (ID: #{phrase.id})"
   end
 end
