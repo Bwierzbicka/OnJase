@@ -1,8 +1,4 @@
-cloudinary:
-  service: Cloudinary
-  cloud_name: <%= ENV["dyntwduqs"] %>
-  api_key: <%= ENV["684731431792893"] %>
-  api_secret: <%= ENV["11PkqcegW1S5-HePqaVGI3AhDyI"] %>
+CLOUDINARY_URL=cloudinary://<684731431792893>:<*********************************>@dyntwduqs
 
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
