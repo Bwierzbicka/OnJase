@@ -6,8 +6,11 @@
   border: 1px solid $OJ-background-color;
 }
 .avatar-large {
-  width: 56px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
+  background-color: $OJ-primary;
+  margin: 30px auto;
 }
 
 .avatar-square {
