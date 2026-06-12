@@ -2,7 +2,7 @@ class FlashcardsController < ApplicationController
   before_action :set_flashcard, only: %i[show edit update destroy]
 
   def index
-    @flashcards = Flashcard.all
+    @flashcards = current_user.flashcards
   end
 
   def show
