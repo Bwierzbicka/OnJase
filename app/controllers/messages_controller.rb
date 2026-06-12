@@ -6,7 +6,6 @@ class MessagesController < ApplicationController
     @message.role = "user"
 
     if @message.save!
-      # @chat.messages.create!(role: :user, content: params[:content])
       CreateChatAssistantMessageJob.perform_later(@chat.id)
 
       respond_to do |format|
