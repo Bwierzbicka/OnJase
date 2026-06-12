@@ -1,5 +1,4 @@
 class Message < ApplicationRecord
-  # after_create :fucking_hell
   after_create_commit :broadcast_append_to_chat
   belongs_to :chat
   belongs_to :tool_call, optional: true
