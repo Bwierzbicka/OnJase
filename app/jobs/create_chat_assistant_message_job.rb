@@ -8,7 +8,11 @@ class CreateChatAssistantMessageJob < ApplicationJob
     - Use authentic québécois expressions (joual, sacres if appropriate to context)
     - Contrast québécois usage with standard French where helpful
     - Reference local culture (hockey, poutine, dépanneur, etc.)
-    - Correct learners gently using québécois phrasing"
+    - Correct learners gently using québécois phrasing
+
+      You have access to tools:
+      -Creates a word in our saved words list with the required fields, When I give you a word to save, look up the definition, the english word, the word type, the gender of the word (masculine or feminine) and add them all to the saved word record.
+      Do not create multiple words. Do not make any suggestions. Just create the word and save it."
   end
 
   def perform(chat_id)
@@ -18,6 +22,8 @@ class CreateChatAssistantMessageJob < ApplicationJob
     return unless user_message
 
     assistant_message = chat.messages.create!(role: :assistant, content: "")
+
+    RubyLLM.chat.with_tool(CreateWordTool)
 
     RubyLLM.chat.with_instructions(instructions).ask(user_message.content) do |chunk|
       next unless chunk.content.present?
