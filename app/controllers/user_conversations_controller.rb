@@ -32,7 +32,7 @@ class UserConversationsController < ApplicationController
 
   def call_assistant
     @user_conversation = UserConversation.find(params[:id])
-    ConversationAssistantJob.perform_later(@user_conversation.id, current_user)
+    ConversationAssistantJob.perform_later(@user_conversation, current_user)
     head :ok
   end
 

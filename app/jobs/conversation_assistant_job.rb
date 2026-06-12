@@ -1,14 +1,20 @@
 class ConversationAssistantJob < ApplicationJob
   queue_as :default
 
-  def perform(conversation_id, current_user)
+  def perform(conversation, current_user)
+  puts "running job"
     @current_user = current_user
-    conversation = UserConversation.find(conversation_id)
+    @conversation = conversation
     @messages = conversation.user_conversation_messages.last(5)
 
-    response = RubyLLM.chat.with_schema(ConversationAssistantSchema).ask(instructions).content
+    response = RubyLLM.chat.with_schema(ConversationAssistantSchema.new).ask(instructions).content
+    puts response
 
-    Turbo::StreamsChannel.broadcast_update_to(target: "conversation-assistant", content: response)
+    Turbo::StreamsChannel.broadcast_update_to(
+      "user_conversation_#{@conversation.id}_user_#{@current_user.id}",
+      target: "conversation-assistant",
+      content: response
+    )
   end
 
   private
