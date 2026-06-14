@@ -6,7 +6,11 @@ class SearchDictionaryEntriesTool < RubyLLM::Tool
     embedding = RubyLLM.embed(query).vectors
     dictionary_entry_results = DictionaryEntry.nearest_neighbors(:embedding, embedding, distance: "euclidean").first(5)
 
-    return "No dictionary entries found for '{query}'" if dictionary_entry_results.empty?
+    return "No dictionary entries found for '#{query}'" if dictionary_entry_results.empty?
+
+    dictionary_entry_results.each do |entry|
+      puts "#{entry.terme_francais} (distance: #{entry.neighbor_distance.round(4)})"
+    end
   end
 end
 # this is claude correct
