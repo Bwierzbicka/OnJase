@@ -231,3 +231,8 @@ flashcard.create!(
   question: "j'ai découvert le problem",
   user: user1
 )
+flashcard.create!(
+  answer: "ouai",
+  question: "ta fini",
+  user: user2
+)
