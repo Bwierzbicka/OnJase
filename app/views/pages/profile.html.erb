@@ -1,24 +1,65 @@
-<div class='text-center mt-5 p-4'>
-  <h1>My Proflie</h1>
-  <div>
-    <% if current_user.avatar.attached? %>
-      <%= cl_image_tag current_user.avatar.key,
-            gravity: :face,
-            class: "avatar-large rounded-circle object-fit-cover d-block",
-            alt: "User avatar" %>
-    <% else %>
-      <%= image_tag "avatar_default.png", class: "avatar-large rounded-circle object-fit-cover d-block", alt: "Default avatar" %>
+<div class="container py-4">
+
+
+  <div class="profile-banner rounded-4 mb-4 position-relative">
+    <div class="banner-overlay rounded-4"></div>
+
+
+    <div class="text-center position-relative" style="margin-top: 60px;">
+      <% if current_user.avatar.attached? %>
+        <%= cl_image_tag current_user.avatar.key,
+              gravity: :face,
+              width: 120,
+              height: 120,
+              crop: :thumb,
+              class: "rounded-circle shadow-lg border border-3 border-white object-fit-cover",
+              alt: "User avatar" %>
+      <% else %>
+        <%= image_tag "avatar_default.png",
+              width: 120,
+              height: 120,
+              class: "rounded-circle shadow-lg border border-3 border-white object-fit-cover",
+              alt: "Default avatar" %>
+      <% end %>
+    </div>
+  </div>
+
+
+  <div class="text-center mb-4">
+    <h2 class="fw-bold mb-1"><%= current_user.display_name.presence || current_user.username %></h2>
+    <p class="text-muted">@<%= current_user.username %></p>
+  </div>
+
+
+  <div class="d-flex justify-content-around text-center mb-4">
+    <div>
+      <h5 class="fw-bold mb-0">12</h5>
+      <small class="text-muted">Conversations</small>
+    </div>
+    <div>
+      <h5 class="fw-bold mb-0">8</h5>
+      <small class="text-muted">Saved</small>
+    </div>
+    <div>
+      <h5 class="fw-bold mb-0">34</h5>
+      <small class="text-muted">Messages</small>
+    </div>
+  </div>
+
+
+  <div class="d-flex flex-column gap-3">
+
+    <%= link_to edit_user_registration_path,
+          class: "btn btn-primary py-2 fw-semibold rounded-3" do %>
+      ✏️ Edit Profile
     <% end %>
-  </div>
-  <h3> <%= current_user.display_name if current_user.display_name.present? %></h3>
-  <p class="my-3">Username: <strong><%= current_user.username %></strong></p>
 
-  <hr>
-  <div class='d-flex flex-column gap-3'>
-    <%= link_to "Edit profile", edit_user_registration_path, class: 'text-decoration-none text-OJ-text-main' %>
+    <%= link_to destroy_user_session_path,
+          data: { turbo_method: :delete },
+          class: "btn btn-outline-danger py-2 fw-semibold rounded-3" do %>
+      🚪 Log Out
+    <% end %>
 
-    <%= link_to "LOG OUT", destroy_user_session_path,
-                      data: { turbo_method: :delete },
-                      class: 'text-decoration-none text-danger' %>
   </div>
+
 </div>
