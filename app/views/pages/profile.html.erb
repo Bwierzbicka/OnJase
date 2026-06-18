@@ -1,65 +1,56 @@
-<div class="container py-4">
 
+<div class="d-flex justify-content-center align-items-start min-vh-100" style="padding-top: 60px;">
+  <div class="profile-card p-5 rounded-4 shadow-lg text-center">
 
-  <div class="profile-banner rounded-4 mb-4 position-relative">
-    <div class="banner-overlay rounded-4"></div>
+    <% if current_user.avatar.attached? %>
+      <%= cl_image_tag current_user.avatar.key,
+            gravity: :face,
+            width: 160,
+            height: 160,
+            crop: :thumb,
+            class: "rounded-circle shadow border border-3 border-white object-fit-cover mb-4",
+            alt: "User avatar" %>
+    <% else %>
+      <%= image_tag "avatar_default.png",
+            width: 160,
+            height: 160,
+            class: "rounded-circle shadow border border-3 border-white object-fit-cover mb-4",
+            alt: "Default avatar" %>
+    <% end %>
 
+    <h1 class="fw-bold mb-4" style="font-size: 2rem;">
+      <%= current_user.display_name.presence || current_user.username %>
+    </h1>
 
-    <div class="text-center position-relative" style="margin-top: 60px;">
-      <% if current_user.avatar.attached? %>
-        <%= cl_image_tag current_user.avatar.key,
-              gravity: :face,
-              width: 120,
-              height: 120,
-              crop: :thumb,
-              class: "rounded-circle shadow-lg border border-3 border-white object-fit-cover",
-              alt: "User avatar" %>
-      <% else %>
-        <%= image_tag "avatar_default.png",
-              width: 120,
-              height: 120,
-              class: "rounded-circle shadow-lg border border-3 border-white object-fit-cover",
-              alt: "Default avatar" %>
+    <div class="stats-row d-flex justify-content-between text-center mb-5 px-2">
+      <div class="stat-box mx-2">
+        <h3 class="fw-bold mb-1"><%= current_user.user_conversations.count %></h3>
+        <small class="text-muted">Conversations</small>
+      </div>
+
+      <div class="stat-box mx-2">
+        <h3 class="fw-bold mb-1"><%= current_user.saved_items.count %></h3>
+        <small class="text-muted">Saved</small>
+      </div>
+
+      <div class="stat-box mx-2">
+        <h3 class="fw-bold mb-1"><%= current_user.chats.joins(:messages).count %></h3>
+        <small class="text-muted">Messages</small>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column gap-3">
+      <%= link_to edit_user_registration_path,
+            class: "btn btn-primary py-3 fw-semibold rounded-3 profile-btn" do %>
+        ✏️ Edit Profile
+      <% end %>
+
+      <%= link_to destroy_user_session_path,
+            data: { turbo_method: :delete },
+            class: "btn btn-outline-danger py-3 fw-semibold rounded-3 profile-btn" do %>
+        🚪 Log Out
       <% end %>
     </div>
-  </div>
-
-
-  <div class="text-center mb-4">
-    <h2 class="fw-bold mb-1"><%= current_user.display_name.presence || current_user.username %></h2>
-    <p class="text-muted">@<%= current_user.username %></p>
-  </div>
-
-
-  <div class="d-flex justify-content-around text-center mb-4">
-    <div>
-      <h5 class="fw-bold mb-0">12</h5>
-      <small class="text-muted">Conversations</small>
-    </div>
-    <div>
-      <h5 class="fw-bold mb-0">8</h5>
-      <small class="text-muted">Saved</small>
-    </div>
-    <div>
-      <h5 class="fw-bold mb-0">34</h5>
-      <small class="text-muted">Messages</small>
-    </div>
-  </div>
-
-
-  <div class="d-flex flex-column gap-3">
-
-    <%= link_to edit_user_registration_path,
-          class: "btn btn-primary py-2 fw-semibold rounded-3" do %>
-      ✏️ Edit Profile
-    <% end %>
-
-    <%= link_to destroy_user_session_path,
-          data: { turbo_method: :delete },
-          class: "btn btn-outline-danger py-2 fw-semibold rounded-3" do %>
-      🚪 Log Out
-    <% end %>
 
   </div>
-
 </div>

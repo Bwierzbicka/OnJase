@@ -18,3 +18,16 @@ body {
 .test {
   border: 1px solid black;
 }
+
+.btn-primary {
+  background-color: $OJ-primary !important;
+  border-color: $OJ-primary !important;
+  color: white !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: darken($OJ-primary, 8%) !important;
+  border-color: darken($OJ-primary, 8%) !important;
+}
